@@ -28,7 +28,28 @@ checkInForm.addEventListener("submit", function (event) {
   handleCheckIn();
 });
 
-// Main handler function (we'll build this out in the next steps)
+// Main handler function
 function handleCheckIn() {
-  console.log("Form submitted!");
+  const attendeeName = attendeeNameInput.value.trim();
+
+  // Basic validation - don't allow empty names
+  if (attendeeName === "") {
+    return;
+  }
+
+  showGreeting(attendeeName);
+  updateTotalCount();
+}
+
+// Displays a personalized welcome message
+function showGreeting(name) {
+  greetingEl.textContent = `Welcome, ${name}!`;
+  greetingEl.classList.add("success-message");
+  greetingEl.style.display = "block";
+}
+
+// Increments and displays the total attendee count
+function updateTotalCount() {
+  totalAttendees++;
+  attendeeCountEl.textContent = totalAttendees;
 }
