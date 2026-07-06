@@ -28,9 +28,9 @@ checkInForm.addEventListener("submit", function (event) {
   handleCheckIn();
 });
 
-// Main handler function
 function handleCheckIn() {
   const attendeeName = attendeeNameInput.value.trim();
+  const selectedTeam = teamSelect.value; // <-- NEW LINE
 
   // Basic validation - don't allow empty names
   if (attendeeName === "") {
@@ -39,6 +39,7 @@ function handleCheckIn() {
 
   showGreeting(attendeeName);
   updateTotalCount();
+  updateTeamCount(selectedTeam); // <-- NEW LINE
 }
 
 // Displays a personalized welcome message
@@ -52,4 +53,16 @@ function showGreeting(name) {
 function updateTotalCount() {
   totalAttendees++;
   attendeeCountEl.textContent = totalAttendees;
+}
+// Increments the count for the selected team and updates its display
+function updateTeamCount(team) {
+  teamCounts[team]++;
+
+  if (team === "water") {
+    waterCountEl.textContent = teamCounts.water;
+  } else if (team === "zero") {
+    zeroCountEl.textContent = teamCounts.zero;
+  } else if (team === "power") {
+    powerCountEl.textContent = teamCounts.power;
+  }
 }
