@@ -30,16 +30,17 @@ checkInForm.addEventListener("submit", function (event) {
 
 function handleCheckIn() {
   const attendeeName = attendeeNameInput.value.trim();
-  const selectedTeam = teamSelect.value; // <-- NEW LINE
+  const selectedTeam = teamSelect.value;
 
-  // Basic validation - don't allow empty names
   if (attendeeName === "") {
     return;
   }
 
   showGreeting(attendeeName);
   updateTotalCount();
-  updateTeamCount(selectedTeam); // <-- NEW LINE
+  updateTeamCount(selectedTeam);
+  updateProgressBar(); // <-- NEW LINE
+
 }
 
 // Displays a personalized welcome message
@@ -65,4 +66,9 @@ function updateTeamCount(team) {
   } else if (team === "power") {
     powerCountEl.textContent = teamCounts.power;
   }
+}
+// Updates the progress bar width based on current attendance
+function updateProgressBar() {
+  const percentage = (totalAttendees / MAX_ATTENDEES) * 100;
+  progressBarEl.style.width = `${percentage}%`;
 }
