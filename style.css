@@ -382,3 +382,25 @@ select {
     grid-template-columns: 1fr;
   }
 }
+
+/* Celebration banner */
+.celebration-banner {
+  display: none;
+  background: linear-gradient(135deg, #0071c5, #00aeef);
+  color: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.celebration-banner h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* Highlight the winning team card */
+.team-card.winner {
+  box-shadow: 0 0 0 3px #0071c5;
+  transform: scale(1.03);
+}

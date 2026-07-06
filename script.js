@@ -8,6 +8,8 @@ const greetingEl = document.getElementById("greeting");
 const attendeeCountEl = document.getElementById("attendeeCount");
 const progressBarEl = document.getElementById("progressBar");
 const attendeeListEl = document.getElementById("attendeeList");
+const celebrationBannerEl = document.getElementById("celebrationBanner");
+const winningTeamTextEl = document.getElementById("winningTeamText");
 // Team count displays
 const waterCountEl = document.getElementById("waterCount");
 const zeroCountEl = document.getElementById("zeroCount");
@@ -42,6 +44,7 @@ function handleCheckIn() {
   updateProgressBar(); // <-- NEW LINE
   addAttendeeToList(attendeeName, selectedTeam);
   saveData();
+  checkForCelebration();
 
 }
 
@@ -135,3 +138,42 @@ function loadData() {
 
 // Run this once when the page loads
 loadData();
+// Checks if the attendance goal has been reached and triggers celebration
+function checkForCelebration() {
+  if (totalAttendees >= MAX_ATTENDEES) {
+    const winningTeam = getWinningTeam();
+    showCelebration(winningTeam);
+  }
+}
+
+// Determines which team currently has the highest count
+function getWinningTeam() {
+  let topTeam = "water";
+  let topCount = teamCounts.water;
+
+  if (teamCounts.zero > topCount) {
+    topTeam = "zero";
+    topCount = teamCounts.zero;
+  }
+
+  if (teamCounts.power > topCount) {
+    topTeam = "power";
+    topCount = teamCounts.power;
+  }
+
+  return topTeam;
+}
+// Displays the celebration banner and highlights the winning team
+function showCelebration(winningTeam) {
+  const teamNames = {
+    water: "Team Water Wise",
+    zero: "Team Net Zero",
+    power: "Team Renewables",
+  };
+
+  winningTeamTextEl.textContent = `${teamNames[winningTeam]} wins with ${teamCounts[winningTeam]} check-ins!`;
+  celebrationBannerEl.style.display = "block";
+
+  const winningCard = document.querySelector(`.team-card.${winningTeam}`);
+  winningCard.classList.add("winner");
+}
