@@ -7,7 +7,7 @@ const teamSelect = document.getElementById("teamSelect");
 const greetingEl = document.getElementById("greeting");
 const attendeeCountEl = document.getElementById("attendeeCount");
 const progressBarEl = document.getElementById("progressBar");
-
+const attendeeListEl = document.getElementById("attendeeList");
 // Team count displays
 const waterCountEl = document.getElementById("waterCount");
 const zeroCountEl = document.getElementById("zeroCount");
@@ -40,6 +40,7 @@ function handleCheckIn() {
   updateTotalCount();
   updateTeamCount(selectedTeam);
   updateProgressBar(); // <-- NEW LINE
+  addAttendeeToList(attendeeName, selectedTeam);
 
 }
 
@@ -65,10 +66,17 @@ function updateTeamCount(team) {
     zeroCountEl.textContent = teamCounts.zero;
   } else if (team === "power") {
     powerCountEl.textContent = teamCounts.power;
+    
   }
 }
 // Updates the progress bar width based on current attendance
 function updateProgressBar() {
   const percentage = (totalAttendees / MAX_ATTENDEES) * 100;
   progressBarEl.style.width = `${percentage}%`;
+}
+// Adds a new attendee entry to the visible list
+function addAttendeeToList(name, team) {
+  const listItem = document.createElement("li");
+  listItem.textContent = `${name} — ${team}`;
+  attendeeListEl.appendChild(listItem);
 }
