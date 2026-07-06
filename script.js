@@ -103,3 +103,35 @@ function getAttendeeListData() {
 
   return items;
 }
+// Loads saved state from localStorage when the page first opens
+function loadData() {
+  const savedState = localStorage.getItem("checkInAppState");
+
+  // If nothing has been saved yet, stop here (keep defaults at 0)
+  if (savedState === null) {
+    return;
+  }
+
+  const appState = JSON.parse(savedState);
+
+  // Restore state variables
+  totalAttendees = appState.totalAttendees;
+  teamCounts = appState.teamCounts;
+
+  // Restore the visual display to match
+  attendeeCountEl.textContent = totalAttendees;
+  waterCountEl.textContent = teamCounts.water;
+  zeroCountEl.textContent = teamCounts.zero;
+  powerCountEl.textContent = teamCounts.power;
+  updateProgressBar();
+
+  // Rebuild the attendee list in the DOM
+  appState.attendeeList.forEach(function (entryText) {
+    const listItem = document.createElement("li");
+    listItem.textContent = entryText;
+    attendeeListEl.appendChild(listItem);
+  });
+}
+
+// Run this once when the page loads
+loadData();
