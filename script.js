@@ -41,6 +41,7 @@ function handleCheckIn() {
   updateTeamCount(selectedTeam);
   updateProgressBar(); // <-- NEW LINE
   addAttendeeToList(attendeeName, selectedTeam);
+  saveData();
 
 }
 
@@ -79,4 +80,26 @@ function addAttendeeToList(name, team) {
   const listItem = document.createElement("li");
   listItem.textContent = `${name} — ${team}`;
   attendeeListEl.appendChild(listItem);
+}
+// Saves current state to localStorage so it survives a page refresh
+function saveData() {
+  const appState = {
+    totalAttendees: totalAttendees,
+    teamCounts: teamCounts,
+    attendeeList: getAttendeeListData(),
+  };
+
+  localStorage.setItem("checkInAppState", JSON.stringify(appState));
+}
+
+// Reads all current attendee list items from the DOM into a plain array
+function getAttendeeListData() {
+  const items = [];
+  const listItems = attendeeListEl.querySelectorAll("li");
+
+  listItems.forEach(function (li) {
+    items.push(li.textContent);
+  });
+
+  return items;
 }
